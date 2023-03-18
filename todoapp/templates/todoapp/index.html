@@ -1,0 +1,33 @@
+{% extends 'todoapp/layout.html' %}
+
+{% block content %}
+
+<div style="margin-top: 50px;" class="ui container">
+    <h1>Almaz python 50 points project</h1>
+    <h3>Напишите что нибудь и нажмите на кнопку</h3>
+    <form class="ui form" action="{% url 'add' %}" method="post">
+        {% csrf_token %}
+        <div class="field">
+            <h2>СЮДА </h2>
+            <input type="text" name="title"><br>
+        </div>
+        <button  type="submit">Добавить</button>
+    </form>
+
+{% for todo in todo_list %}
+<div class="ui segment">
+    <p class="ui big header">№{{ todo.id }} {{ todo.title }}</p>
+
+    {% if todo.is_complete == False %}
+    <span class="ui gray label">Not completed</span>
+    <a  href="{% url 'update' todo_id=todo.id %}">Закрыть</a>
+    {% else %}
+    <span class="ui green label">Complete</span>
+    <a  href="{% url 'update' todo_id=todo.id %}">Открыть</a>
+    {% endif %}
+    <a  href="{% url 'delete' todo_id=todo.id %}">Удалить</a>
+</div>
+{% endfor %}
+</div>
+
+{% endblock content %}
